@@ -1,6 +1,15 @@
 import mysql.connector
+from dotenv import load_dotenv
+import os
 
-# ANSI color codes
+load_dotenv()
+
+# Getting the variables from .env files
+database_host_name = os.environ.get("DATABASE_HOST_NAME")
+database_username = os.environ.get("DATABASE_USERNAME")
+database_name= os.environ.get("DATABASE_NAME")
+database_password = os.environ.get("DATABASE_PASSWORD")
+
 RESET = "\033[0m"
 RED = "\033[91m"
 GREEN = "\033[92m"
@@ -12,13 +21,13 @@ MAGENTA = "\033[95m"
 # 📂 Helper function to manage DB connection
 def db_connection():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="H1u2z3@4i5",
-        database="library_management"
+        host=database_host_name,
+        user=database_username,
+        password=database_password,
+        database=database_name
     )
 
-# 🟩 Create the 'books' table (run once)
+# 🟩 Create the 'books' table 
 def create_table():
     with db_connection() as connection:
         with connection.cursor() as cursor:
@@ -37,7 +46,6 @@ def create_table():
             connection.commit()
             print(f"{GREEN}Table created successfully!{RESET}")
 
-# ➕ Add a new book to the library
 def add_book():
     print(f"{BLUE}Adding a new book...{RESET}")
     book_name = input("Enter book name: ")
