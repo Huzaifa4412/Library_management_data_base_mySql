@@ -32,7 +32,7 @@ def create_table():
     with db_connection() as connection:
         with connection.cursor() as cursor:
             cursor.execute('''
-            CREATE TABLE IF NOT EXISTS books (
+                CREATE TABLE IF NOT EXISTS books (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 book_name VARCHAR(255),
                 author_name VARCHAR(255),
