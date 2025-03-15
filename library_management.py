@@ -75,6 +75,19 @@ def remove_book():
             connection.commit()
             print(f"{GREEN}Book '{book_name}' deleted successfully!{RESET}")
 
+# 🔁 Update a book
+def update_book():
+    print(f"{GREEN}Update the book ...{RESET}")
+    book_name:str = input(f"{CYAN}Enter the book name: {RESET}")
+    isRead = input("Have you read this book? (yes/no): ").lower() in ['yes', 'y']
+    with db_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("update books set isRead=%s where book_name=%s", (isRead,book_name))
+        connection.commit()
+    print(f"{GREEN}Books updated ...{RESET}")
+
+
+    
 # 👀 View all books
 def view_books():
     print(f"{YELLOW}Viewing all books...{RESET}")
@@ -129,9 +142,11 @@ if __name__ == "__main__":
         print(f"{YELLOW}2. Remove a Book{RESET}")
         print(f"{YELLOW}3. Search a Book{RESET}")
         print(f"{YELLOW}4. View All Books{RESET}")
-        print(f"{RED}5. Exit{RESET}")
+        print(f"{YELLOW}5. Update Status{RESET}")
         
-        choice = input("Choose an option (1-5): ")
+        print(f"{RED}6. Exit{RESET}")
+        
+        choice = input("Choose an option (1-6): ")
         
         if choice == "1":
             add_book()
@@ -142,7 +157,10 @@ if __name__ == "__main__":
         elif choice == "4":
             view_books()
         elif choice == "5":
+            update_book()
+        elif choice == "6":
             print(f"{RED}Goodbye!{RESET}")
+            
             break
         else:
             print(f"{RED}Invalid choice. Please try again.{RESET}")
