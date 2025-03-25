@@ -4,14 +4,14 @@ from dotenv import load_dotenv
 import os
 
 # Load environment variables
-load_dotenv()
-
-db_config = {
+if os.path.exists(".env"):
+    load_dotenv()
+    db_config = {
     "host": os.getenv("DATABASE_HOST_NAME"),
     "user": os.getenv("DATABASE_USERNAME"),
     "password": os.getenv("DATABASE_PASSWORD"),
     "database": os.getenv("DATABASE_NAME")
-}
+    }
 
 def db_connection():
     return mysql.connector.connect(**db_config)
